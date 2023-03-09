@@ -1,5 +1,7 @@
 package principii_clean_code.clase;
 
+import java.util.Arrays;
+
 public abstract class Aplicant{
 	protected String nume;
 	protected String prenume;
@@ -7,6 +9,8 @@ public abstract class Aplicant{
 	protected int punctaj;
 	protected int nr_proiecte;
 	protected String[] denumireProiect;
+
+	private static int pragPunctaj=80;
 	
 	
 	public String getNume() {
@@ -27,12 +31,12 @@ public abstract class Aplicant{
 	public void setVarsta(int varsta) {
 		this.varsta = varsta;
 	}
-	public void statut(){
-		if(punctaj>80)
-			System.out.println("Aplicantul "+nume+" "+prenume+" a fost acceptat.");
-		else
-			System.out.println("Aplicantul "+nume+" "+prenume+" nu a fost acceptat.");
-		}
+	public void afisareStatus(){
+		System.out.println("Aplicantul "+this.nume+" "+this.prenume+
+				(this.punctaj>Aplicant.pragPunctaj ? " ": " nu ")+"  a fost acceptat.");
+
+		//operator ternal
+	}
 	public int getPunctaj() {
 		return punctaj;
 	}
@@ -59,8 +63,31 @@ public abstract class Aplicant{
 	public int getNr_proiecte() {
 		return nr_proiecte;
 	}
-	public void setNr_proiecte(int nr_proiecte) {
+	public void setNr_proiecte(int nr_proiecte, String[] denumireProiect) {
+
 		this.nr_proiecte = nr_proiecte;
+		this.denumireProiect=new String[this.nr_proiecte];
+		for (int i = 0; i < this.nr_proiecte; i++) {
+			this.denumireProiect[i]= denumireProiect[i];
+		}
 	}
 
+
+	@Override
+	public String toString() {
+		final StringBuffer sb = new StringBuffer("");
+		sb.append("nume='").append(nume).append('\'');
+		sb.append(", prenume='").append(prenume).append('\'');
+		sb.append(", varsta=").append(varsta);
+		sb.append(", punctaj=").append(punctaj);
+		sb.append(", nr_proiecte=").append(nr_proiecte);
+		sb.append(", denumireProiect=").append(denumireProiect == null ? "null" : Arrays.asList(denumireProiect).toString());
+
+		return sb.toString();
+	}
+	public abstract void afisareFinantare();
+
+	public void afisareFinantare(String tipAplicant ,int sumaFinantata) {
+		System.out.println(tipAplicant+this.nume+" "+this.prenume+" primeste"+sumaFinantata+" Euro/zi in proiect.");
+	}
 }
